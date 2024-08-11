@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:youtube_do_perigo/constants/colors.dart';
 import 'package:youtube_do_perigo/constants/dimensions.dart';
 import 'package:youtube_do_perigo/constants/strings.dart';
+import 'package:youtube_do_perigo/views/booming_view.dart';
+import 'package:youtube_do_perigo/views/library_view.dart';
+import 'package:youtube_do_perigo/views/main_view.dart';
+import 'package:youtube_do_perigo/views/subscriptions_view.dart';
 
 class Home extends StatefulWidget{
   @override
@@ -12,10 +16,10 @@ class _Home extends State<Home>{
 
   int _currentPageIndex = 0;
    final List<Widget> _screens = [
-    const Text("TELA A"),
-    const Text("TELA B"),
-    const Text("TELA C"),
-    const Text("TELA D"),
+    const MainView(),
+    const BoomingView(),
+    const SubscriptionsView(),
+    const LibraryView(),
   ];
 
   @override
