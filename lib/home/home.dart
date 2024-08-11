@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:youtube_do_perigo/constants/colors.dart';
 import 'package:youtube_do_perigo/constants/dimensions.dart';
 import 'package:youtube_do_perigo/constants/strings.dart';
+import 'package:youtube_do_perigo/tools/custom_search_delegate.dart';
 import 'package:youtube_do_perigo/views/booming_view.dart';
 import 'package:youtube_do_perigo/views/library_view.dart';
 import 'package:youtube_do_perigo/views/main_view.dart';
@@ -14,20 +15,24 @@ class Home extends StatefulWidget{
 
 class _Home extends State<Home>{
 
+  String queryResult = "";
   int _currentPageIndex = 0;
-   final List<Widget> _screens = [
-    const MainView(),
-    const BoomingView(),
-    const SubscriptionsView(),
-    const LibraryView(),
-  ];
 
   @override
   Widget build(BuildContext context){
+    final List<Widget> _screens = [
+      MainView(queryResult),
+      const BoomingView(),
+      const SubscriptionsView(),
+      const LibraryView(),
+    ];
     return Scaffold(
       appBar: appBar(),
 
-      body: _screens[_currentPageIndex],
+      body: Container(
+        padding: EdgeInsets.all(16),
+        child: _screens[_currentPageIndex],
+      ),
 
       bottomNavigationBar: bottomNavigationBar(),
     );
@@ -42,7 +47,14 @@ class _Home extends State<Home>{
       ),
       actions:[
         IconButton(onPressed: (){}, icon: const Icon(Icons.videocam), color: Color(ColorsHex.appBarIconColor),),
-        IconButton(onPressed: (){}, icon: const Icon(Icons.search), color: Color(ColorsHex.appBarIconColor),),
+        IconButton(onPressed: ()async{
+          String? result = await showSearch(context: context, delegate: CustomSearchDelegate());
+          setState(() {
+            if(result != null){
+              queryResult = result;
+            }
+          });
+        }, icon: const Icon(Icons.search), color: Color(ColorsHex.appBarIconColor),),
         IconButton(onPressed: (){}, icon: const Icon(Icons.account_circle), color: Color(ColorsHex.appBarIconColor),),
       ],
       backgroundColor: Color(ColorsHex.appBarColor),
